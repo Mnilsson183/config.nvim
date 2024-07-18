@@ -626,42 +626,42 @@ require('lazy').setup({
     end,
   },
 
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    lazy = false,
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
-      },
-    },
-  },
+  --{ -- Autoformat
+  --  'stevearc/conform.nvim',
+  --  lazy = false,
+  --  keys = {
+  --    {
+  --      '<leader>f',
+  --      function()
+  --        require('conform').format { async = true, lsp_fallback = true }
+  --      end,
+  --      mode = '',
+  --      desc = '[F]ormat buffer',
+  --    },
+  --  },
+  --  opts = {
+  --    notify_on_error = false,
+  --    format_on_save = function(bufnr)
+  --      -- Disable "format_on_save lsp_fallback" for languages that don't
+  --      -- have a well standardized coding style. You can add additional
+  --      -- languages here or re-enable it for the disabled ones.
+  --      local disable_filetypes = { c = true, cpp = true }
+  --      return {
+  --        timeout_ms = 500,
+  --        lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+  --      }
+  --    end,
+  --    formatters_by_ft = {
+  --      lua = { 'stylua' },
+  --      -- Conform can also run multiple formatters sequentially
+  --      -- python = { "isort", "black" },
+  --      --
+  --      -- You can use a sub-list to tell conform to run *until* a formatter
+  --      -- is found.
+  --      -- javascript = { { "prettierd", "prettier" } },
+  --    },
+  --  },
+  --},
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -772,6 +772,23 @@ require('lazy').setup({
         },
       }
     end,
+  },
+  {
+    "theprimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("harpoon"):setup()
+    end,
+    keys = {
+      { "<leader>A", function() require("harpoon"):list():add() end, desc = "harpoon file", },
+      { "<leader>a", function() local harpoon = require("harpoon") harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "harpoon quick menu", },
+      { "<leader>1", function() require("harpoon"):list():select(1) end, desc = "harpoon to file 1", },
+      { "<leader>2", function() require("harpoon"):list():select(2) end, desc = "harpoon to file 2", },
+      { "<leader>3", function() require("harpoon"):list():select(3) end, desc = "harpoon to file 3", },
+      { "<leader>4", function() require("harpoon"):list():select(4) end, desc = "harpoon to file 4", },
+      { "<leader>5", function() require("harpoon"):list():select(5) end, desc = "harpoon to file 5", },
+    },
   },
 
   { -- You can easily change to a different colorscheme.
