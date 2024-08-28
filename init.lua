@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -108,7 +108,7 @@ vim.opt.number = true
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+vim.opt.showmode = true
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -158,7 +158,6 @@ vim.opt.scrolloff = 10
 --  See `:help vim.keymap.set()`
 --
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -626,42 +625,32 @@ require('lazy').setup({
     end,
   },
 
-  --{ -- Autoformat
-  --  'stevearc/conform.nvim',
-  --  lazy = false,
-  --  keys = {
-  --    {
-  --      '<leader>f',
-  --      function()
-  --        require('conform').format { async = true, lsp_fallback = true }
-  --      end,
-  --      mode = '',
-  --      desc = '[F]ormat buffer',
-  --    },
-  --  },
-  --  opts = {
-  --    notify_on_error = false,
-  --    format_on_save = function(bufnr)
-  --      -- Disable "format_on_save lsp_fallback" for languages that don't
-  --      -- have a well standardized coding style. You can add additional
-  --      -- languages here or re-enable it for the disabled ones.
-  --      local disable_filetypes = { c = true, cpp = true }
-  --      return {
-  --        timeout_ms = 500,
-  --        lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-  --      }
-  --    end,
-  --    formatters_by_ft = {
-  --      lua = { 'stylua' },
-  --      -- Conform can also run multiple formatters sequentially
-  --      -- python = { "isort", "black" },
-  --      --
-  --      -- You can use a sub-list to tell conform to run *until* a formatter
-  --      -- is found.
-  --      -- javascript = { { "prettierd", "prettier" } },
-  --    },
-  --  },
-  --},
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    lazy = false,
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use a sub-list to tell conform to run *until* a formatter
+        -- is found.
+        -- javascript = { { "prettierd", "prettier" } },
+      },
+    },
+  },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -790,7 +779,6 @@ require('lazy').setup({
       { "<leader>5", function() require("harpoon"):list():select(5) end, desc = "harpoon to file 5", },
     },
   },
-
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
